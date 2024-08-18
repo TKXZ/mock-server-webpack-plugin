@@ -13,7 +13,7 @@ class MockServerWebpackPlugin {
 
   constructor(options: ServerOptions) {
     if (options != null && typeof options === 'object') {
-      const { port = 3636, host = 'localhost', mockPath } = options
+      const { port, host = 'localhost', mockPath } = options
 
       checkMockPath(mockPath)
       checkPort(port)

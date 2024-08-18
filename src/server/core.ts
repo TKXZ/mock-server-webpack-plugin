@@ -113,7 +113,7 @@ export default function (server: Express, options: any): void {
     })
     handleServerError(mockServer)
     watchToReload(mockPath, server, serverRoutesStackStartLen, apisLen)
-  } catch (error) {
-    console.log(genNotice['error']('MOCK SERVER', 'Mock server failed to start'))
+  } catch (error: any) {
+    console.log(genNotice['error']('MOCK SERVER', `Mock server failed to start: ${error as string}`))
   }
 }
