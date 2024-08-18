@@ -5,10 +5,14 @@
   "author": "Fangke Shen",
   "license": "MIT",
   "main": "./dist/cjs/index.js",
-  "types": "./types/index.d.ts",
+  "types": "types/index.d.ts",
   "exports": {
     "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js"
+    "require": "./dist/cjs/index.js",
+    "types": {
+      "types": "./types/index.d.ts",
+      "default": "./types/index.d.ts"
+    }
   },
   "engines": {
     "node": ">= 18.20.4"
