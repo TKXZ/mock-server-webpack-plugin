@@ -1,14 +1,12 @@
 # mock-server-webpack-plugin
 
-## 一个帮助前端开发者前期快速开发的 webpack 插件
+- **:wrench: 同时支持`webpack 4` 与 `webpack 5`**
+- **:key: 同时支持 `ESM` 规范与 `CommonJS` 规范 ​**
+- **:black_nib: 内置[mockjs](http://mockjs.com/), 多种数据结构随意组合**
 
--   **:wrench: 同时支持`webpack 4` 与 `webpack 5`**
--   **:key: 同时支持 `ESM` 规范与 `CommonJS` 规范​**
--   **:black_nib: 内置[mockjs](http://mockjs.com/), 多种数据结构随意组合**
-
--   **:fire: 支持热更新​，修改Mock 数据无需重新启动服务**
--   **:bulb: `Typescript` 编写，更好的类型提示**
--   **:hatching_chick: 开发友好，无跨域问题，无需依赖其他服务**
+- **:fire: 支持热更新 ​，修改 Mock 数据无需重新启动服务**
+- **:bulb: `Typescript` 编写，更好的类型提示**
+- **:hatching_chick: 开发友好，无跨域问题，无需依赖其他服务**
 
 ## 开始
 
@@ -35,13 +33,12 @@ const config: Configuration = {
   plugins: [
     new MockServerWebpackPlugin({
       port: 3636,
-      mockPath: path.resolve("./mock.js"),
+      mockPath: path.resolve('./mock.js'),
     }),
   ],
 }
 
 export default config
-
 ```
 
 `CommonJS`
@@ -60,13 +57,12 @@ const config = {
   plugins: [
     new MockServerWebpackPlugin({
       port: 3000,
-      mockPath: path.resolve("./mock.js"),
+      mockPath: path.resolve('./mock.js'),
     }),
   ],
 }
 
 module.exports = config
-
 ```
 
 ### 接口编写
@@ -125,6 +121,4 @@ module.exports = [
     },
   },
 ]
-
 ```
-
