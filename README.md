@@ -37,6 +37,8 @@ const config: Configuration = {
     new MockServerWebpackPlugin({
       port: 3636,
       mockPath: path.resolve('./mock.js'),
+      // or
+      // openApi: path.resolve('default_OpenAPI.json'),
     }),
   ],
 }
@@ -61,6 +63,8 @@ const config = {
     new MockServerWebpackPlugin({
       port: 3000,
       mockPath: path.resolve('./mock.js'),
+      // or
+      // openApi: path.resolve('default_OpenAPI.json'),
     }),
   ],
 }
@@ -68,7 +72,7 @@ const config = {
 module.exports = config
 ```
 
-### 接口编写
+### 接口编写 (mockPath 模式)
 
 ```js
 const Mockjs = require('mockjs')
@@ -125,3 +129,36 @@ module.exports = [
   },
 ]
 ```
+
+### 接口自动生成(openApi 模式)
+
+```js
+module.exports = {
+    // ...
+    plugins: [
+        new MockServerWebpackPlugin({
+          openApi: path.resolve('default_OpenAPI.json'),
+        }),
+        // ...
+    ]
+}
+```
+
+### 所有配置
+
+```js
+module.exports = {
+    // ...
+    plugins: [
+        new MockServerWebpackPlugin({
+          port: 3636, // 端口号
+          host: '127.0.0.1', // 主机
+          prefix: '/dev-api', // api 前缀
+          mockPath: path.resolve('./mock.js'), // mockPath 模式
+          openApi: path.resolve('default_OpenAPI.json'), // openApi 模式
+        }),
+        // ...
+    ]
+}
+```
+
