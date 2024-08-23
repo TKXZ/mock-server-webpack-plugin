@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
 import type { Request } from 'express'
+import fetch from 'node-fetch'
 import { genNotice } from '@/utils/notice'
 import _ from 'lodash'
 

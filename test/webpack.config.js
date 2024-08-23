@@ -12,7 +12,7 @@ module.exports = {
   watch: true,
   plugins: [
     new MockServerWebpackPlugin({
-      openApi: path.resolve(TEST_PATH, 'default_OpenAPI.json'),
+      openApi: 'http://127.0.0.1:4000/file/default_OpenAPI.json',
     }),
   ],
 }
