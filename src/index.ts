@@ -6,21 +6,14 @@ import { checkPort, checkMockPath } from '@/utils/check'
 import server from '@/server/server'
 import run from '@/server/core'
 
+import { getDtos, getOSAJSON, getRoutes } from '@/utils/parse-openapi'
+
 class MockServerWebpackPlugin {
-  private readonly port: number
-  private readonly host: string
-  private readonly mockPath: string
+  private readonly options: ServerOptions
 
   constructor(options: ServerOptions) {
     if (options != null && typeof options === 'object') {
-      const { port, host = 'localhost', mockPath } = options
-
-      checkMockPath(mockPath)
-      checkPort(port)
-
-      this.port = port
-      this.host = host
-      this.mockPath = mockPath
+      this.options = { port: 3636, host: 'localhost', ...options }
     } else {
       console.log(genNotice['error']('MOCK SERVER ERROR', 'Invalid options'))
       throw new Error('Invalid options')
@@ -28,11 +21,13 @@ class MockServerWebpackPlugin {
   }
 
   apply(compiler: Compiler) {
-    compiler.hooks.afterPlugins.tap(PLUGIN_NAME, () => {
+    compiler.hooks.afterPlugins.tap(PLUGIN_NAME, async () => {
+      const res = await getOSAJSON(this.options.openApi ?? '')
+      const { port, host, mockPath } = this.options
       run(server, {
-        port: this.port,
-        host: this.host,
-        mockPath: this.mockPath,
+        port,
+        host,
+        mockPath,
       })
     })
   }

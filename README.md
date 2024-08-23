@@ -3,10 +3,10 @@
 - **:wrench: 同时支持`webpack 4` 与 `webpack 5`**
 - **:key: 同时支持 `ESM` 规范与 `CommonJS` 规范 ​**
 - **:black_nib: 内置[mockjs](http://mockjs.com/), 多种数据结构随意组合**
-
 - **:fire: 支持热更新 ​，修改 Mock 数据无需重新启动服务**
 - **:bulb: `Typescript` 编写，更好的类型提示**
 - **:hatching_chick: 开发友好，无跨域问题，无需依赖其他服务**
+- **:construction: 解析 OpenApi 3 规范数据文件,快速生成可用 Mock 服务**
 
 ## 开始
 

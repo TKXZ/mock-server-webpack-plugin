@@ -4,6 +4,7 @@ import type { MockApiRecord, ParsedMockApiRecord, HTTPMethods_L, RegisterApisRet
 import type { Express, Request, Response } from 'express'
 import { genNotice } from '@/utils/notice'
 import { handleServerError } from '@/utils/error-handler'
+import fs from 'node:fs'
 
 /**
  * 获取接口
@@ -12,6 +13,9 @@ import { handleServerError } from '@/utils/error-handler'
  * @returns
  */
 function getApis(mockPath: string, prefix: string = ''): MockApiRecord[] {
+  if (!fs.existsSync(mockPath)) {
+    throw new Error('Invalid mockPath')
+  }
   const apis = require(mockPath)
   if (prefix && typeof prefix === 'string') {
     return apis.map((item: MockApiRecord) => {
