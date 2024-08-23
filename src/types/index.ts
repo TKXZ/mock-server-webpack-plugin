@@ -1,14 +1,21 @@
 import type { Request, Response } from 'express'
 
-export type ServerOptions = {
+type ServerOptionsMock = {
+  /** 导出mock 接口文件的地址 */
+  mockPath: string
+  openApi?: never
+}
+
+type ServerOptionsOpenApi = {
+  /** openApi json 文件地址 */
+  openApi: string
+  mockPath?: never
+}
+export type ServerOptions = (ServerOptionsMock | ServerOptionsOpenApi) & {
   /** 端口号 */
   port?: number
   /** 主机 */
   host?: string
-  /** 导出mock 接口文件的地址 */
-  mockPath?: string
-  /** openApi json 文件地址 */
-  openApi?: string
 }
 
 export type HTTPMethods_H = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS'

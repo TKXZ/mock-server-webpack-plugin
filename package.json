@@ -1,6 +1,6 @@
 {
   "name": "mock-server-webpack-plugin",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Mock server plugin for webpack based on Express.",
   "author": "Fangke Shen",
   "license": "MIT",

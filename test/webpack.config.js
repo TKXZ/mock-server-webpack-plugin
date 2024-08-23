@@ -12,7 +12,6 @@ module.exports = {
   watch: true,
   plugins: [
     new MockServerWebpackPlugin({
-      mockPath: path.resolve(TEST_PATH, 'mock'),
       openApi: path.resolve(TEST_PATH, 'default_OpenAPI.json'),
     }),
   ],

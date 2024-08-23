@@ -2,33 +2,27 @@ import type { Compiler } from 'webpack'
 import type { ServerOptions } from './types'
 import { PLUGIN_NAME } from '@/constants'
 import { genNotice } from '@/utils/notice'
-import { checkPort, checkMockPath } from '@/utils/check'
+import { checkPluginOptions } from '@/utils/check'
+import { handleUncatchError } from '@/utils/error-handler'
 import server from '@/server/server'
 import run from '@/server/core'
 
-import { getDtos, getOSAJSON, getRoutes } from '@/utils/parse-openapi'
-
 class MockServerWebpackPlugin {
-  private readonly options: ServerOptions
+  private readonly options: ServerOptions | null = null
 
   constructor(options: ServerOptions) {
-    if (options != null && typeof options === 'object') {
+    handleUncatchError()
+    try {
       this.options = { port: 3636, host: 'localhost', ...options }
-    } else {
-      console.log(genNotice['error']('MOCK SERVER ERROR', 'Invalid options'))
-      throw new Error('Invalid options')
+      checkPluginOptions(this.options)
+    } catch (err) {
+      console.log(genNotice['error']('MOCK SERVER ERROR', err as string))
     }
   }
 
   apply(compiler: Compiler) {
     compiler.hooks.afterPlugins.tap(PLUGIN_NAME, async () => {
-      const res = await getOSAJSON(this.options.openApi ?? '')
-      const { port, host, mockPath } = this.options
-      run(server, {
-        port,
-        host,
-        mockPath,
-      })
+      run(server, this.options)
     })
   }
 }

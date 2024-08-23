@@ -4,7 +4,8 @@ import type { MockApiRecord, ParsedMockApiRecord, HTTPMethods_L, RegisterApisRet
 import type { Express, Request, Response } from 'express'
 import { genNotice } from '@/utils/notice'
 import { handleServerError } from '@/utils/error-handler'
-import fs from 'node:fs'
+import { getApiFromOSA } from '@/utils/parse-openapi'
+import { prefixApiUrl } from '@/utils/apis'
 
 /**
  * 获取接口
@@ -12,19 +13,9 @@ import fs from 'node:fs'
  * @param prefix
  * @returns
  */
-function getApis(mockPath: string, prefix: string = ''): MockApiRecord[] {
-  if (!fs.existsSync(mockPath)) {
-    throw new Error('Invalid mockPath')
-  }
+function getApis(mockPath: string): MockApiRecord[] {
   const apis = require(mockPath)
-  if (prefix && typeof prefix === 'string') {
-    return apis.map((item: MockApiRecord) => {
-      item.url = prefix + item.url
-      return item
-    })
-  } else {
-    return apis
-  }
+  return apis
 }
 
 /**
@@ -105,12 +96,20 @@ function watchToReload(mockPath: string, server: Express, serverRoutesStackStart
   })
 }
 
-export default function (server: Express, options: any): void {
+export default async function (server: Express, options: any): Promise<void> {
   try {
-    const { prefix, port, host, mockPath } = options
+    const { prefix, port, host, mockPath, openApi } = options
 
-    const apis = getApis(mockPath, prefix)
-    const { apisLen, serverRoutesStackStartLen } = registerApis(server, apis)
+    let apis: MockApiRecord[] = []
+    if (mockPath) {
+      apis = getApis(mockPath)
+    } else if (openApi) {
+      apis = await getApiFromOSA(openApi)
+    }
+
+    prefix && (apis = prefixApiUrl(apis, prefix)) // 支持接口前缀
+
+    const { apisLen, serverRoutesStackStartLen } = registerApis(server, apis) // 注册接口
 
     const mockServer = server.listen(port, host, () => {
       console.log(genNotice['success']('MOCK SERVER', `Server is running at http://${host}:${port}`))

@@ -14,6 +14,9 @@ const createNotice = (
   }
 }
 
+/**
+ * 生成通知
+ */
 export const genNotice = {
   success: (title: string, content: string): string => {
     const t_color = 'black'
